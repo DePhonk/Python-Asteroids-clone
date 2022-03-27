@@ -43,7 +43,7 @@ class Player(GameObject):
         angle = self.dir.angle_to(UP)
         rotated_surface = rotozoom(self.sprite, angle, 1.0)
         rotated_surface_size = Vector2(rotated_surface.get_size())
-        blit_pos = self.pos - rotated_surface_size/2
+        blit_pos = self.pos - rotated_surface_size*0.5
         surface.blit(rotated_surface, blit_pos)
 
 class Meteor(GameObject):
