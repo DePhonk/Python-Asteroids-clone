@@ -63,6 +63,9 @@ class Bullet(GameObject):
     def __init__(self, pos, vel):
         super().__init__(pos, loader("bullet"), vel)
 
+    def obj_move(self, surface):
+        self.pos = self.vel+self.pos
+
 class Meteor(GameObject):
     def __init__(self, position, create_meteor_callback, size=3):
         self.create_meteor_callback = create_meteor_callback
@@ -74,7 +77,7 @@ class Meteor(GameObject):
             1: 0.25
         }
         scale = size_to_scale[size]
-        sprite = rotozoom(loader("meteor"), 0, scale)
+        self.sprite = rotozoom(loader("meteor"), 0, scale)
         super().__init__(position, loader("meteor"), vel_rand(1, 3))
 
     def split(self):
