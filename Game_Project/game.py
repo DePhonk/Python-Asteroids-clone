@@ -1,9 +1,10 @@
+#game.py
 from GameObject import *
 from settings import loader, pos_rand
 import pygame
 
 
-class Main:
+class Main: #Основной класс
     MIN_DIST = 200
     # __init__ - иннициализация PyGame, установка размера и названия экрана
     def __init__(self):
@@ -12,24 +13,25 @@ class Main:
         self.screen = pygame.display.set_mode((1024, 640))
         pygame.display.set_caption("SpaceWarrior")
         self.background = loader("bg", False)
-
+        #Вызов объектов, объекты meteor и bullets создаются как простой список
         self.meteor = []
         self.bullets = []
         self.player = Player((1024 // 2, 640 // 2), self.bullets.append)
-
+        #Случайна расстановка метеоритов
         for m in range(10):
             while True:
                 pos = pos_rand(self.screen)
                 if pos.distance_to(self.player.pos) > self.MIN_DIST:
                     break
             self.meteor.append(Meteor(pos, self.meteor.append))
-
+    #Вызов главного цикла игры
     def main_game_loop(self):
         while True:
+            #Пока пользователь не прервёт сессию - бедут выполняться обработка следующих данных:
             self._controls()
             self._drawing()
             self._game_process()
-
+    #Обработка нажатий клавиш
     def _controls(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
@@ -55,7 +57,7 @@ class Main:
 
             if key[pygame.K_SPACE]:
                 self.player.shoot()
-
+    #Обработка игровых процессов(логики)
     def _game_process(self):
         for obj in self._get_obj():
             obj.obj_move(self.screen)
@@ -77,7 +79,7 @@ class Main:
         for bullet in self.bullets[:]:
             if not self.screen.get_rect().collidepoint(bullet.pos):
                 self.bullets.remove(bullet)
-
+    #Обработка и прорисовка объектов
     def _drawing(self):
         self.screen.blit(self.background, (0, 0))
 
