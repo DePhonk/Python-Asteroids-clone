@@ -1,3 +1,4 @@
+#GameObject.py
 from pygame.math import Vector2
 from pygame.transform import rotozoom
 from settings import loader, wrap_pos, vel_rand
